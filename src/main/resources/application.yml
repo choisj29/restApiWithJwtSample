@@ -1,0 +1,78 @@
+spring:
+  datasource:
+    ###set h2
+    url: jdbc:h2:tcp://localhost/~/board
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 12
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 500 #100~1000
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
+    redis:
+      host: localhost
+      port: 6379
+
+  ##swagger 버전 맞추기
+#  mvc:
+#    path match:
+#      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    #    org.hibernate.SQL : debug
+    org.hibernate.type : trace
+    org:
+      hibernate:
+        engine:
+          transaction:
+            internal:
+              TransactionImpl: debug
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      #timeout: 30m
+      tracking-modes: cookie
+    encoding:
+      force-request: true
+      force-response: true
+
+custom:
+  jwt:
+    secretKey: "5f9c9f3410bd40d3c1c958fc85b41d913289d32d56c5e63e31b412a1af5f10ed5f9c9f3410bd40d3c1c958fc85b41d913289d32d56c5e63e31b412a1af5f10ed"
+    refresh-token-validity-in-seconds: 1209600 # 14일
+    access-token-validity-in-seconds: 43200 # 12시간
+
+springdoc:
+  swagger-ui:
+    groups-order: DESC
+    tags-sorter: alpha
+    operations-sorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+    defaultModelsExpandDepth: 2
+    defaultModelExpandDepth: 2
+  api-docs:
+    path: /api-docs
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  writer-with-default-pretty-printer: true
+  model-and-view-allowed: true
+#  paths-to-match:
+#    - /members/*
+
